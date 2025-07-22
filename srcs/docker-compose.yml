@@ -1,0 +1,45 @@
+services:
+  mariadb:
+    pull_policy: never
+    image: mariadb:latest
+
+    build: 
+      context: mariaDB
+      dockerfile: Dockerfile
+
+    networks: 
+      - inception
+    volumes:
+      - mariadb:/var/lib/mysql/
+  wordpress:
+    pull_policy: never
+    image: wordpress:latest
+
+    build: 
+      context: WordPress
+      dockerfile: Dockerfile
+
+    networks: 
+      - inception
+    volumes:
+      - wordpress:/var/www/html/
+  nginx:
+    pull_policy: never
+    ports:
+      - "443:443"
+    image: nginx
+
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    
+    networks:
+      - inception
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  mariadb:
+  wordpress:

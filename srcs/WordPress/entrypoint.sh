@@ -1,6 +1,7 @@
 #!bin/bash
 
 
-wp core install --url="http://cmorel.42.fr" --title="Joy" --admin_user="WORDPRESS_USER" --admin_password="WORDPRESS_PASS" --admin_email="WORDPRESS_MAIL" --locale=en_US
-exec $@
+wp core install --url="http://cmorel.42.fr" --title="Joy" --admin_user="xray" --admin_password="xray" --admin_email="xrayxv.5@gmail.com" --locale=en_US
+sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.3/fpm/pool.d/www.conf
 
+exec $@
