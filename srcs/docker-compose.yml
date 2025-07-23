@@ -1,5 +1,7 @@
 services:
+
   mariadb:
+    env_file: ".env"
     pull_policy: never
     image: mariadb:latest
 
@@ -12,6 +14,7 @@ services:
     volumes:
       - mariadb:/var/lib/mysql/
   wordpress:
+    env_file: ".env"
     pull_policy: never
     image: wordpress:latest
 
@@ -22,8 +25,9 @@ services:
     networks: 
       - inception
     volumes:
-      - wordpress:/var/www/html/
+      - wordpress:/var/www/html
   nginx:
+    env_file: ".env"
     pull_policy: never
     ports:
       - "443:443"
@@ -35,6 +39,9 @@ services:
     
     networks:
       - inception
+    
+    volumes:
+      - wordpress:/var/www/html
 
 networks:
   inception:
