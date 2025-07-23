@@ -1,47 +1,53 @@
 services:
 
   mariadb:
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$WORDPRESS_DB_PASSWORD"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
     env_file: ".env"
     pull_policy: never
     image: mariadb:latest
-
-    build: 
+    build:
       context: mariaDB
       dockerfile: Dockerfile
-
-    networks: 
+    networks:
       - inception
     volumes:
       - mariadb:/var/lib/mysql/
+
   wordpress:
+    depends_on:
+      mariadb:
+        condition: service_healthy
     env_file: ".env"
     pull_policy: never
     image: wordpress:latest
-
-    build: 
+    build:
       context: WordPress
       dockerfile: Dockerfile
-
-    networks: 
+    networks:
       - inception
     volumes:
       - wordpress:/var/www/html
+
   nginx:
+    depends_on:
+      mariadb:
+        condition: service_healthy
     env_file: ".env"
     pull_policy: never
     ports:
       - "443:443"
     image: nginx
-
     build:
       context: nginx
       dockerfile: Dockerfile
-    
     networks:
       - inception
-    
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html:ro
 
 networks:
   inception:

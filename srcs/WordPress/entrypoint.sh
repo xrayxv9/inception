@@ -1,6 +1,5 @@
 #!bin/bash
 
-sleep 10
 sudo -u www -i -- wp core install \
   --url="http://$DOMAIN" \
   --title="sad" \
@@ -11,7 +10,5 @@ sudo -u www -i -- wp core install \
   --path=/var/www/html
 
 sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.3/fpm/pool.d/www.conf
-
-
 
 exec $@
