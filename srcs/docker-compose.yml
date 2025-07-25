@@ -6,7 +6,7 @@ services:
       interval: 5s
       timeout: 2s
       retries: 10
-    env_file: ".env"
+    env_file: .env
     pull_policy: never
     image: mariadb:latest
     build:
@@ -21,7 +21,7 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
-    env_file: ".env"
+    env_file: .env
     pull_policy: never
     image: wordpress:latest
     build:
@@ -34,9 +34,8 @@ services:
 
   nginx:
     depends_on:
-      mariadb:
-        condition: service_healthy
-    env_file: ".env"
+      - wordpress
+    env_file: .env
     pull_policy: never
     ports:
       - "443:443"
