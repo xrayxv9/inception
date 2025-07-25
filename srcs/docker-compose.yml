@@ -10,7 +10,7 @@ services:
     pull_policy: never
     image: mariadb:latest
     build:
-      context: mariaDB
+      context: requirements/mariaDB
       dockerfile: Dockerfile
     networks:
       - inception
@@ -25,7 +25,7 @@ services:
     pull_policy: never
     image: wordpress:latest
     build:
-      context: WordPress
+      context: requirements/WordPress
       dockerfile: Dockerfile
     networks:
       - inception
@@ -41,7 +41,7 @@ services:
       - "443:443"
     image: nginx
     build:
-      context: nginx
+      context: requirements/nginx
       dockerfile: Dockerfile
     networks:
       - inception

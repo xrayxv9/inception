@@ -35,8 +35,6 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 RUN mkdir -p /home/www/html
 RUN chown -R www-data:www-data /var/www/html
 
-RUN chmod -R 777 /var/www/html
-
 EXPOSE 9000
 
 ENTRYPOINT ["sh", "/entrypoint.sh"]
